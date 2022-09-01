@@ -1,0 +1,41 @@
+﻿@model RecipeDetailsServiceModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+@{
+    if (Model == null)
+    {
+        <h2 class="text-center mt-5">Invalid Recipe!</h2>
+    }
+    else
+    {
+        <div class="container">
+            <div class="row">
+
+                <div class="col-md-6 offset-3">
+                    <img src="@Model.ImageUrl" alt="project-image" class="rounded">
+
+                    <div class="project-info-box mt-4">
+                        <div class="project-info-box">
+                            <p><b>@Model.Name</b></p>
+                            <p class="mb-3"><b>Cooking time:</b> @Model.CookingTime minutes</p>
+                            <p><b>Category:</b> @Model.CategoryName</p>
+
+                            <div class="project-info-box mt-3">
+                                <h5>Ingredients</h5>
+                                <p class="mb-0">@Model.Ingredients</p>
+                            </div>
+                            <div class="project-info-box mt-3">
+                                <h5>Directions</h5>
+                                <p class="mb-0">@Model.Directions</p>
+                            </div>
+                        </div>
+                    </div><!-- / project-info-box -->
+                </div><!-- / column -->
+            </div>
+        </div>
+    }
+
+}

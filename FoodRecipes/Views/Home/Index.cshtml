@@ -1,0 +1,63 @@
+﻿@model List<LatestRecipeServiceModel>
+
+@{
+    ViewBag.Title = "Welcome to the Kitchen!";
+}
+
+@if (!Model.Any())
+{
+    <div class="jumbotron">
+        <h1 class="display-4">Hello!</h1>
+        <p class="lead">There are currently no recipes.</p>
+        <hr class="my-4">
+        <p class="lead">
+            <a class="btn btn-primary btn-lg" asp-controller="Recipes" asp-action="Add" role="button">Add Recipe</a>
+        </p>
+    </div>
+}
+
+<div class="row">
+    @foreach (var recipe in Model)
+    {
+        <div class="col-md-3">
+            <div class="card">
+                <a asp-controller="Recipes" asp-action="Details" asp-route-id="@recipe.Id">
+                    <img class="card-img-top" src="@recipe.ImageUrl" alt="@recipe.Name">
+                </a>
+                <div class="card-body">
+                    <h5 class="card-title">@recipe.Name</h5>
+                    <p class="card-text">@recipe.CookingTime Minutes</p>
+                </div>
+               
+            </div>
+        </div>
+    }
+</div>
+
+<div class="mb-5"></div>
+
+<div class="jumbotron d-none" id="statistics">
+    <div class="row">
+        <h2 class="col-md-4 text-center" id="total-recipes"></h2>
+        <h2 class="col-md-4 text-center" id="total-users"></h2>
+        <h2 class="col-md-4 text-center" id="total-cooks"></h2>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    <script>
+        $('#statistics-button').on('click', ev => {
+            $.get('/api/statistics', (data) => {
+                $('#total-recipes').text(data.totalRecipes + " Recipes");
+                $('#total-users').text(data.totalUsers + " Users");
+                $('#total-cooks').text(data.totalCooks + " Cooks");
+
+                $('#statistics').removeClass('d-none');
+                $('#statistics-button').hide();
+            });
+        }); 
+    </script>
+}
+
